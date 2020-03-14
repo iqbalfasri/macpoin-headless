@@ -7,13 +7,13 @@ import {
 } from "./types";
 import { BASE_URL } from "../../helpers/constant";
 
-export const getAllPosts = () => dispatch => {
+export const getAllPosts = (perPage = 10, page = 1) => dispatch => {
   dispatch({
     type: FETCH_POST_BEGIN
   });
 
   axios
-    .get(`${BASE_URL}/posts`)
+    .get(`${BASE_URL}/posts?per_page=${perPage}&page=${page}`)
     .then(json => {
       dispatch({
         type: FETCH_POST_SUCCESS,

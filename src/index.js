@@ -1,7 +1,8 @@
 import React from "react";
 import { render } from "react-snapshot";
 import { Provider } from "react-redux";
-import "./index.css";
+import "./styles/index.css";
+import 'antd/dist/antd.css';
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 

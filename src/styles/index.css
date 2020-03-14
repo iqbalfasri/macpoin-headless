@@ -1,0 +1,10 @@
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
+@import url('https://fonts.googleapis.com/css?family=Muli:400,500,700,900&display=swap');
+
+* {
+  -webkit-font-smoothing: antialiased;
+  font-family: "Muli", sans-serif !important;
+}
+
+/* Components */
+@import url("./components/card.css");
