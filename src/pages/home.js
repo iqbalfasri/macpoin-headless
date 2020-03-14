@@ -1,31 +1,33 @@
-import React from 'react';
-import logo from '../logo.svg';
-import '../App.css';
+import React, { useEffect, useCallback } from "react";
+import "../App.css";
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 
-function App() {
-  const state = useSelector(state => state);
-  console.log(state, "redux state");
+import { getAllPosts } from "../redux/posts/action";
+
+function Home() {
+  const dispatch = useDispatch();
+
+  const initFetch = useCallback(() => {
+    dispatch(getAllPosts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    initFetch();
+  }, [initFetch]);
+
+  const postsState = useSelector(state => state.posts.data);
+  const loadingState = useSelector(state => state.posts.loading);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {loadingState ? (
+        <span>Loading...</span>
+      ) : (
+        postsState.map((post, index) => <div key={index}>{post.id}</div>)
+      )}
     </div>
   );
 }
 
-export default App;
+export default Home;
