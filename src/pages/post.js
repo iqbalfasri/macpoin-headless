@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+
+// Actions
+import { getContentPost } from "../redux/posts/action"
 
 function Post(props) {
-  console.log(props)
-  return <div>Post {JSON.stringify(props)}</div>;
+    const idPost = props.match.params.id
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getContentPost(idPost))
+    }, [])
+
+    return <div>Post</div>
 }
 
-export default Post;
+export default Post
