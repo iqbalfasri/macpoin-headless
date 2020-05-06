@@ -6,14 +6,13 @@ import Card from "../components/Card/card"
 
 // Actions
 import { getAllPosts } from "../redux/posts/action"
-import { nextPage, prevPage } from "../redux/pagination/action"
 
 function Home() {
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1)
 
     const initFetch = useCallback(() => {
-        dispatch(getAllPosts(5, paginate.currentPage))
+        dispatch(getAllPosts(5, currentPage))
     }, [dispatch, currentPage])
 
     useEffect(() => {
@@ -27,16 +26,6 @@ function Home() {
 
     const postsState = useSelector((state) => state.posts.data)
     const loadingState = useSelector((state) => state.posts.loading)
-
-    console.log(paginate, "paginate state")
-
-    const dispatchNextPage = () => {
-        dispatch(nextPage)
-    }
-
-    const dispacthPrevPage = () => {
-        dispatch(prevPage)
-    }
 
     const handleBack = () => {
         setCurrentPage(currentPage - 1)
@@ -117,9 +106,8 @@ function Home() {
                     <span>{currentPage} / 1032</span>
                 </div>
                 <div className="col-md-4">
-                    {console.log(paginate)}
                     <button
-                        onClick={() => dispatchNextPage()}
+                        onClick={() => handleNext()}
                         className="pagination"
                     >
                         Selanjutnya
