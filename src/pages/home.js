@@ -6,21 +6,37 @@ import Card from "../components/Card/card"
 
 // Actions
 import { getAllPosts } from "../redux/posts/action"
+import { nextPage, prevPage } from "../redux/pagination/action"
 
 function Home() {
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1)
 
     const initFetch = useCallback(() => {
-        dispatch(getAllPosts(5, currentPage))
+        dispatch(getAllPosts(5, paginate.currentPage))
     }, [dispatch, currentPage])
 
     useEffect(() => {
         initFetch()
     }, [initFetch])
 
+    const paginate = useSelector((state) => state.paginate)
+    useEffect(() => {
+        console.log(paginate, "redux paginate")
+    }, [paginate])
+
     const postsState = useSelector((state) => state.posts.data)
     const loadingState = useSelector((state) => state.posts.loading)
+
+    console.log(paginate, "paginate state")
+
+    const dispatchNextPage = () => {
+        dispatch(nextPage)
+    }
+
+    const dispacthPrevPage = () => {
+        dispatch(prevPage)
+    }
 
     const handleBack = () => {
         setCurrentPage(currentPage - 1)
@@ -58,9 +74,14 @@ function Home() {
                         style={{
                             width: "100%",
                             height: "250px",
-                            backgroundColor: "#ccc",
+                            backgroundColor: "#f0f0f0",
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
                         }}
-                    />
+                    >
+                        <h1 style={{ fontWeight: 'bolder' }}>Macpoin.com Headless Version</h1>
+                    </div>
                 </div>
             </div>
             <div className="row">
@@ -96,7 +117,11 @@ function Home() {
                     <span>{currentPage} / 1032</span>
                 </div>
                 <div className="col-md-4">
-                    <button onClick={() => handleNext()} className="pagination">
+                    {console.log(paginate)}
+                    <button
+                        onClick={() => dispatchNextPage()}
+                        className="pagination"
+                    >
                         Selanjutnya
                     </button>
                 </div>

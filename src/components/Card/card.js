@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect } from "react"
 import axios from "axios"
 
 function Card({ title, links, id }) {
@@ -8,28 +8,30 @@ function Card({ title, links, id }) {
     const [thumbnailIsLoaded, setThumbnailIsLoaded] = useState(false)
 
     useEffect(() => {
+        const getAuthor = () => {
+            axios
+                .get(author[0].href)
+                .then((json) => {
+                    setauthorName(json.data.name)
+                })
+                .catch((error) => console.log(error))
+        }
+
+        const getThumbnail = () => {
+            axios
+                .get(links["wp:featuredmedia"][0].href)
+                .then((json) => {
+                    const {
+                        source_url,
+                    } = json.data.media_details.sizes.thumbnail
+                    setThumbnail(source_url)
+                })
+                .catch((error) => console.log(error))
+        }
+
         getAuthor()
         getThumbnail()
     }, [])
-
-    const getAuthor = () => {
-        axios
-            .get(author[0].href)
-            .then((json) => {
-                setauthorName(json.data.name)
-            })
-            .catch((error) => console.log(error))
-    }
-
-    const getThumbnail = () => {
-        axios
-            .get(links["wp:featuredmedia"][0].href)
-            .then((json) => {
-                const { source_url } = json.data.media_details.sizes.thumbnail
-                setThumbnail(source_url)
-            })
-            .catch((error) => console.log(error))
-    }
 
     return (
         <div className="d-flex flex-row mb-4">
