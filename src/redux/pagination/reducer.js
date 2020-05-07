@@ -1,21 +1,23 @@
 import { NEXT_PAGE, PREV_PAGE } from "./types"
 
-const initialPageState = {
-    currentPage: 1,
+export const initialState = {
+    page: 1,
 }
 
-export const paginate = (state = initialPageState, action) => {
+export const pagination = (state = initialState, action) => {
     switch (action.type) {
         case NEXT_PAGE:
-            console.log("NExt reducer")
+            console.log("Reducer next")
             return {
                 ...state,
-                currentPage: state + 1,
+                page: state.page + 1,
             }
+
         case PREV_PAGE:
+          console.log("Reducer prev")
             return {
                 ...state,
-                currentPage: state - 1,
+                page: state.page - 1,
             }
 
         default:

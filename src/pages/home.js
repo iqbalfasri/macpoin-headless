@@ -6,23 +6,20 @@ import Card from "../components/Card/card"
 
 // Actions
 import { getAllPosts } from "../redux/posts/action"
+import { nextPage, prevPage } from "../redux/pagination/action"
 
 function Home() {
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1)
+    const paginate = useSelector((state) => state.pagination.page)
 
     const initFetch = useCallback(() => {
-        dispatch(getAllPosts(5, currentPage))
-    }, [dispatch, currentPage])
+        dispatch(getAllPosts(5, paginate))
+    }, [dispatch, paginate])
 
     useEffect(() => {
         initFetch()
     }, [initFetch])
-
-    const paginate = useSelector((state) => state.paginate)
-    useEffect(() => {
-        console.log(paginate, "redux paginate")
-    }, [paginate])
 
     const postsState = useSelector((state) => state.posts.data)
     const loadingState = useSelector((state) => state.posts.loading)
@@ -95,7 +92,7 @@ function Home() {
             <div className="row mb-5">
                 <div className="col-md-4">
                     <button
-                        onClick={() => handleBack()}
+                        onClick={() => dispatch(prevPage())}
                         disabled={currentPage === 1}
                         className="pagination"
                     >
@@ -103,11 +100,11 @@ function Home() {
                     </button>
                 </div>
                 <div className="col-md-4">
-                    <span>{currentPage} / 1032</span>
+                    <span>{paginate} / 1032</span>
                 </div>
                 <div className="col-md-4">
                     <button
-                        onClick={() => handleNext()}
+                        onClick={() => dispatch(nextPage())}
                         className="pagination"
                     >
                         Selanjutnya
