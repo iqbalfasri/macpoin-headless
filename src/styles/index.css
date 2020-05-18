@@ -24,4 +24,4 @@ body {
 
 /* Components */
 @import url("./components/card.css");
-@import url("./components//header.css");
+@import url("./components/header.css");
