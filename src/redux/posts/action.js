@@ -8,6 +8,9 @@ import {
     FETCH_CONTENT_SUCCESS,
     FETCH_CONTENT_ERROR,
 } from "./types"
+
+import { GET_TOTAL_PAGE } from "../pagination/types"
+
 import { BASE_URL } from "../../helpers/constant"
 
 export const getAllPosts = (perPage = 5, page) => (dispatch) => {
@@ -21,6 +24,11 @@ export const getAllPosts = (perPage = 5, page) => (dispatch) => {
             dispatch({
                 type: FETCH_POST_SUCCESS,
                 payload: json.data,
+            })
+
+            dispatch({
+                type: GET_TOTAL_PAGE,
+                payload: json.headers["x-wp-totalpages"],
             })
 
             return json

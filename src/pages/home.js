@@ -7,14 +7,16 @@ import Card from "../components/Card/card"
 // Actions
 import { getAllPosts } from "../redux/posts/action"
 import { nextPage, prevPage } from "../redux/pagination/action"
+import Header from "../components/Header"
 
 function Home() {
     const dispatch = useDispatch()
     const [currentPage, setCurrentPage] = useState(1)
     const paginate = useSelector((state) => state.pagination.page)
+    const totalPage = useSelector((state) => state.pagination.totalPage)
 
     const initFetch = useCallback(() => {
-        dispatch(getAllPosts(5, paginate))
+        dispatch(getAllPosts(6, paginate))
     }, [dispatch, paginate])
 
     useEffect(() => {
@@ -25,11 +27,11 @@ function Home() {
     const loadingState = useSelector((state) => state.posts.loading)
 
     const handleBack = () => {
-        setCurrentPage(currentPage - 1)
+        dispatch(prevPage())
     }
 
     const handleNext = () => {
-        setCurrentPage(currentPage + 1)
+        dispatch(nextPage())
     }
 
     const renderContent = () => {
@@ -42,6 +44,7 @@ function Home() {
                         <Card
                             id={post.id}
                             key={index}
+                            date={post.date}
                             title={post.title.rendered}
                             links={post._links}
                         />
@@ -52,66 +55,37 @@ function Home() {
     }
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-12">
-                    <div
-                        className="mb-5"
-                        style={{
-                            width: "100%",
-                            height: "250px",
-                            backgroundColor: "#f0f0f0",
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <h1 style={{ fontWeight: 'bolder' }}>Macpoin.com Headless Version</h1>
+        <React.Fragment>
+            <Header />
+            <div className="container">
+                <h1 className="news-title">Kabar Apple Terbaru</h1>
+                <div className="row">{renderContent()}</div>
+                <div style={{ textAlign: 'center' }} className="row mb-5">
+                    <div className="col-md-4">
+                        <button
+                            onClick={() => handleBack()}
+                            disabled={paginate === 1}
+                            className="pagination"
+                        >
+                            Sebelumnya
+                        </button>
+                    </div>
+                    <div className="col-md-4">
+                        <span>
+                            {paginate} / {totalPage === null ? 0 : totalPage}
+                        </span>
+                    </div>
+                    <div className="col-md-4">
+                        <button
+                            onClick={() => handleNext()}
+                            className="pagination"
+                        >
+                            Selanjutnya
+                        </button>
                     </div>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-md-8">
-                    <h1
-                        className="mb-4"
-                        style={{ fontSize: "32px", fontWeight: "900" }}
-                    >
-                        Kabar Apple Terbaru
-                    </h1>
-                    {renderContent()}
-                </div>
-                <div className="col-md-4">
-                    <h1
-                        className="mb-4"
-                        style={{ fontSize: "32px", fontWeight: "900" }}
-                    >
-                        Tips MacOS &amp; iOS
-                    </h1>
-                </div>
-            </div>
-            <div className="row mb-5">
-                <div className="col-md-4">
-                    <button
-                        onClick={() => dispatch(prevPage())}
-                        disabled={currentPage === 1}
-                        className="pagination"
-                    >
-                        Sebelumnya
-                    </button>
-                </div>
-                <div className="col-md-4">
-                    <span>{paginate} / 1032</span>
-                </div>
-                <div className="col-md-4">
-                    <button
-                        onClick={() => dispatch(nextPage())}
-                        className="pagination"
-                    >
-                        Selanjutnya
-                    </button>
-                </div>
-            </div>
-        </div>
+        </React.Fragment>
     )
 }
 

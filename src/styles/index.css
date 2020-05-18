@@ -1,19 +1,27 @@
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
-@import url('https://fonts.googleapis.com/css?family=Muli:400,500,700,900&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900&display=swap");
 
-* {
-  -webkit-font-smoothing: antialiased;
-  font-family: "Muli", sans-serif !important;
+body {
+    background-color: #ecf0f1 !important;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Montserrat", sans-serif !important;
 }
 
 .pagination {
-  background: transparent;
-  border: none;
-  outline: none;
+    background: transparent;
+    border: none;
+    outline: none;
 }
 .pagination:focus {
-  outline: none
+    outline: none;
+}
+
+.news-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 26px;
 }
 
 /* Components */
 @import url("./components/card.css");
+@import url("./components//header.css");
