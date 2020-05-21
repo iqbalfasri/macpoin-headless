@@ -11,7 +11,6 @@ import Header from "../components/Header"
 
 function Home() {
     const dispatch = useDispatch()
-    const [currentPage, setCurrentPage] = useState(1)
     const paginate = useSelector((state) => state.pagination.page)
     const totalPage = useSelector((state) => state.pagination.totalPage)
 
