@@ -1,14 +1,12 @@
 import React, { useEffect, useCallback, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
-// Style Component
-import Card from "../components/Card/card"
-
 // Actions
 import { getAllPosts } from "../redux/posts/action"
 import { nextPage, prevPage } from "../redux/pagination/action"
 import Header from "../components/Header"
 import Pagination from "../components/Pagination"
+import Content from "../components/Content"
 
 function Home() {
     const dispatch = useDispatch()
@@ -34,33 +32,13 @@ function Home() {
         dispatch(nextPage())
     }
 
-    const renderContent = () => {
-        if (loadingState) {
-            return <span>Loading...</span>
-        } else {
-            return (
-                <>
-                    {postsState.map((post, index) => (
-                        <Card
-                            id={post.id}
-                            key={index}
-                            date={post.date}
-                            title={post.title.rendered}
-                            links={post._links}
-                        />
-                    ))}
-                </>
-            )
-        }
-    }
-
     return (
         <React.Fragment>
             <Header />
-            <div className="container">
-                <h1 className="news-title">Kabar Apple Terbaru</h1>
-                <div className="row">{renderContent()}</div>
-            </div>
+            <Content
+                loadingState={loadingState}
+                postsState={postsState}
+            />
             <Pagination
                 page={paginate}
                 totalPage={totalPage}
