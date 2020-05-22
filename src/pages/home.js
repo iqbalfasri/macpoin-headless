@@ -8,6 +8,7 @@ import Card from "../components/Card/card"
 import { getAllPosts } from "../redux/posts/action"
 import { nextPage, prevPage } from "../redux/pagination/action"
 import Header from "../components/Header"
+import Pagination from "../components/Pagination"
 
 function Home() {
     const dispatch = useDispatch()
@@ -59,31 +60,13 @@ function Home() {
             <div className="container">
                 <h1 className="news-title">Kabar Apple Terbaru</h1>
                 <div className="row">{renderContent()}</div>
-                <div style={{ textAlign: 'center' }} className="row mb-5">
-                    <div className="col-md-4">
-                        <button
-                            onClick={() => handleBack()}
-                            disabled={paginate === 1}
-                            className="pagination"
-                        >
-                            Sebelumnya
-                        </button>
-                    </div>
-                    <div className="col-md-4">
-                        <span>
-                            {paginate} / {totalPage === null ? 0 : totalPage}
-                        </span>
-                    </div>
-                    <div className="col-md-4">
-                        <button
-                            onClick={() => handleNext()}
-                            className="pagination"
-                        >
-                            Selanjutnya
-                        </button>
-                    </div>
-                </div>
             </div>
+            <Pagination
+                page={paginate}
+                totalPage={totalPage}
+                handleBack={handleBack}
+                handleNext={handleNext}
+            />
         </React.Fragment>
     )
 }
